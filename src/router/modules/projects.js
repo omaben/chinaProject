@@ -3,19 +3,25 @@
 import Layout from '@/layout'
 
 const projectsRouter = {
-  
-        path: '/projects',
-        component: Layout,
-        meta: {
-            icon: 'tab'
-          },
-        children: [
-          {
-            path: 'list',
-            component: () => import('@/views/projects/'),
-            meta: { title: 'Projects', noCache: true }
-          }
-        ]
+
+  path: '/projects',
+  component: Layout,
+  meta: {
+    icon: 'tab'
+  },
+  children: [
+    {
+      path: 'list',
+      component: () => import('@/views/projects/'),
+      meta: { title: 'Projects', noCache: true }
+    },
+    {
+      path: ':id',
+      hidden: true,
+      component: () => import('@/views/projects/singleProject'),
+      meta: { title: 'Project', noCache: true }
+    }
+  ]
 }
 
 export default projectsRouter

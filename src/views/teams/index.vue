@@ -14,7 +14,7 @@
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+      <el-button v-if="fromProject" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
         Add
       </el-button>
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
@@ -47,33 +47,33 @@
       </el-table-column>
       <el-table-column label="Name" min-width="150px">
         <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
+          <span>{{ row.title }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Users" min-width="150px">
         <template slot-scope="{row}">
-          <el-tag style="margin-right:10px;margin-bottom:10px;cursor:pointer" v-for="user in row.users" :key="user.key" @click="handleUpdate(row)">{{ user }}</el-tag>
+          <el-tag v-for="user in row.users" :key="user.key" style="margin-right:10px;margin-bottom:10px;cursor:pointer" @click="handleUpdate(row)">{{ user }}</el-tag>
         </template>
       </el-table-column>
-      
+
       <el-table-column label="Project Manager" width="110px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.reviewer }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Project Worker" align="center" width="135">
+      <el-table-column v-if="fromProject" label="Project Worker" align="center" width="135">
         <template slot-scope="{row}">
-          <span v-if="row.pageviews" class="link-type" @click="handleFetchPv(row.pageviews)">{{ row.pageviews }}</span>
+          <span v-if="row.projectId" class="link-type" @click="handleFetchPv(row.pageviews)">{{ row.projectId.length }}</span>
           <span v-else>0</span>
         </template>
       </el-table-column>
-      
+
       <el-table-column v-if="showReviewer" label="Departement" width="110px" align="center">
         <template slot-scope="{row}">
           <span style="color:red;">{{ row.reviewer }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column v-if="fromProject" label="Actions" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" class="mb-1" @click="handleUpdate(row)">
             Edit
@@ -98,9 +98,9 @@
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
-    
+
     <el-dialog :title="projectTitle" :visible.sync="dialogProjectVisible" style="width='90%'">
-      <project/>
+      <project />
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogProjectVisible = false">
           Cancel
@@ -109,22 +109,22 @@
     </el-dialog>
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="150px" style="width: 400px; margin-left:50px;">
-        
+
         <el-form-item label="Date Creation" prop="timestamp">
           <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date" />
         </el-form-item>
         <el-form-item label="Name" prop="title">
           <el-input v-model="temp.title" />
         </el-form-item>
-        
+
         <el-form-item label="Project Manager" prop="title">
           <el-select v-model="temp.reviewer" style="width: 100%" class="filter-item" @change="handleFilter">
             <el-option v-for="item in users" :key="item" :label="item" :value="item" />
           </el-select>
         </el-form-item>
         <el-form-item label="Users" prop="title">
-          <el-select multiple v-model="temp.users" style="width: 100%" class="filter-item" @change="handleFilter">
-            <el-option  v-for="item in users" :key="item" :label="item" :value="item" />
+          <el-select v-model="temp.users" multiple style="width: 100%" class="filter-item" @change="handleFilter">
+            <el-option v-for="item in users" :key="item" :label="item" :value="item" />
           </el-select>
         </el-form-item>
       </el-form>
@@ -193,7 +193,7 @@ const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
 
 export default {
   name: 'ComplexTable',
-  components: { Pagination,Project },
+  components: { Pagination, Project },
   directives: { waves },
   filters: {
     statusFilter(status) {
@@ -208,16 +208,20 @@ export default {
       return calendarTypeKeyValue[type]
     }
   },
-  props:{
+  props: {
     projectId: {
       type: Number,
       default: 0
     },
+    fromProject: {
+      type: Boolean,
+      default: true
+    }
   },
   data() {
     return {
-      users:['User1', 'User2', 'User3', 'User4'],
-      projectTitle:'',
+      users: ['User1', 'User2', 'User3', 'User4'],
+      projectTitle: '',
       tableKey: 0,
       list: null,
       total: 0,
@@ -244,7 +248,7 @@ export default {
         type: '',
         status: 'published'
       },
-      dialogProjectVisible:false,
+      dialogProjectVisible: false,
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
@@ -265,30 +269,30 @@ export default {
     this.getList()
   },
   methods: {
-    handleViewTask(item){
-          this.$router.push('/tasks/task')
-      },
+    handleViewTask(item) {
+      this.$router.push('/tasks/task')
+    },
     getList() {
       this.listLoading = true
-      var list=[]
+      var list = []
       fetchList(this.listQuery).then(response => {
-        if(this.projectId>0){
+        if (this.projectId > 0) {
           console.log(response.data.items)
-          for(var i=0;i<response.data.items.length;i++){
-            var projectVar=false;
-            for(var j=0; j<response.data.items[i].projectId.length; j++){
-              if(response.data.items[i].projectId[j]==this.projectId){
-                projectVar=true
+          for (var i = 0; i < response.data.items.length; i++) {
+            var projectVar = false
+            for (var j = 0; j < response.data.items[i].projectId.length; j++) {
+              if (response.data.items[i].projectId[j] === this.projectId) {
+                projectVar = true
               }
             }
-            if(projectVar){
+            if (projectVar) {
               list.push(response.data.items[i])
             }
           }
-        }else{
+        } else {
           list = response.data.items
         }
-        this.list=list
+        this.list = list
         this.total = response.data.total
         console.log(list)
         // Just to simulate the time of the request
@@ -359,8 +363,8 @@ export default {
         }
       })
     },
-    handleProject(row){
-      this.projectTitle='Projects do by :'+row.title;
+    handleProject(row) {
+      this.projectTitle = 'Projects do by :' + row.title
       this.dialogProjectVisible = true
     },
     handleUpdate(row) {

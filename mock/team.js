@@ -19,7 +19,7 @@ for (let i = 0; i < countTeam; i++) {
     content: baseContent,
     forecast: '@float(0, 100, 2, 2)',
     importance: '@integer(1, 3)',
-    'projectId|1': [[1,3,5,10,15,2,12],[4,6,7,8,9,22,25],[1,3,5,10,15,2,12]],
+    'projectId|1': [[1,3,5,10,15,2,12],[8,9,22,25],[1,3,5,2,12]],
     'type': ['T1', 'T2', 'T3', 'T4'],
     'status|1': ['inProgress', 'finish'],
     display_time: '@datetime',

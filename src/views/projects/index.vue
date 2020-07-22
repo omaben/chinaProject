@@ -5,10 +5,10 @@
       <!-- <el-select v-model="listQuery.pageviews" placeholder="Departments" clearable style="width: 130px" class="filter-item">
         <el-option v-for="item in departementOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
       </el-select> -->
-       <!-- <el-select v-model="listQuery.type" multiple placeholder="Teams" clearable class="filter-item" style="width: 90px">
+      <!-- <el-select v-model="listQuery.type" multiple placeholder="Teams" clearable class="filter-item" style="width: 90px">
         <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
       </el-select>  -->
-      <el-select v-model="listQuery.sort"  style="width: 140px" class="filter-item" @change="handleFilter">
+      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
         <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
       </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
@@ -71,8 +71,8 @@
           <svg-icon v-for="n in + row.importance" :key="n" icon-class="star" class="meta-item__icon" />
         </template>
       </el-table-column>
-      
-     <!--  <el-table-column v-if="showReviewer" label="Departements" width="110px" align="center">
+
+      <!--  <el-table-column v-if="showReviewer" label="Departements" width="110px" align="center">
         <template slot-scope="{row}">
           <span v-if="row.pageviews" class="link-type" @click="handleFetchPv(row.pageviews)">{{ row.pageviews | departmentFilter }}</span>
           <span v-else>0</span>
@@ -90,7 +90,7 @@
           <el-button type="primary" size="mini" title="edit" class="mb-1" @click="handleUpdate(row)">
             <svg-icon icon-class="edit" />
           </el-button>
-          
+
           <el-button type="primary" size="mini" title="Teams" class="mb-1" @click="handleTeams(row)">
             <svg-icon icon-class="peoples" />
           </el-button>
@@ -103,7 +103,7 @@
           <el-button type="primary" size="mini" title="Documents" class="mb-1" @click="handleUpdate(row)">
             <svg-icon icon-class="clipboard" />
           </el-button>
-          <el-button type="success" size="mini" title="view"  class="mb-1" @click="handleUpdate(row)">
+          <el-button type="success" size="mini" title="view" class="mb-1" @click="handleViewProject(row)">
             <svg-icon icon-class="eye-open" />
           </el-button>
           <el-button v-if="row.status!='deleted'" class="mb-1" size="mini" type="danger" @click="handleDelete(row,$index)">
@@ -115,7 +115,7 @@
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
     <el-dialog :title="projectTitle" :visible.sync="dialogProjectVisible" style="width='90%'">
-      <teams :projectId='projectId'/>
+      <teams ref="teams" :project-id="projectId" :from-project="fromProject" />
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogProjectVisible = false">
           Cancel
@@ -154,8 +154,8 @@
         <el-form-item label="Project Office" prop="title">
           <el-input v-model="temp.title" />
         </el-form-item>
-        <el-form-item  label="Teams" prop="type">
-          <el-select multiple v-model="temp.type" class="filter-item" placeholder="Please select">
+        <el-form-item label="Teams" prop="type">
+          <el-select v-model="temp.type" multiple class="filter-item" placeholder="Please select">
             <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
           </el-select>
         </el-form-item>
@@ -165,7 +165,7 @@
         <el-form-item label="Finish Date" prop="timestamp">
           <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date" />
         </el-form-item>
-        
+
         <el-form-item label="Status">
           <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
             <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
@@ -233,7 +233,7 @@ const departmentKeyValue = departementOptions.reduce((acc, cur) => {
 
 export default {
   name: 'ComplexTable',
-  components: { Pagination,Teams },
+  components: { Pagination, Teams },
   directives: { waves },
   filters: {
     statusFilter(status) {
@@ -253,13 +253,14 @@ export default {
   },
   data() {
     return {
-      projectTitle:'',
-      dialogProjectVisible:false,
+      projectTitle: '',
+      dialogProjectVisible: false,
       tableKey: 0,
       list: null,
       total: 0,
       listLoading: true,
-      projectId:0,
+      projectId: 0,
+      fromProject: false,
       listQuery: {
         page: 1,
         limit: 20,
@@ -303,9 +304,12 @@ export default {
     this.getList()
   },
   methods: {
-    handleViewTask(item){
-          this.$router.push('/tasks/task')
-      },
+    handleViewTask(item) {
+      this.$router.push('/tasks/task')
+    },
+    handleViewProject(item) {
+      this.$router.push('/projects/' + item.id)
+    },
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
@@ -380,11 +384,13 @@ export default {
         }
       })
     },
-    handleTeams(row){
-      this.projectTitle='Teams do the project :'+row.title;
-      this.projectId=row.id;
+    handleTeams(row) {
+      this.projectTitle = 'Teams do the project :' + row.title
+      this.projectId = row.id
       console.log(this.projectId)
+
       this.dialogProjectVisible = true
+      this.$refs.teams.getList()
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row) // copy obj
