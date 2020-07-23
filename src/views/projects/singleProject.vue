@@ -59,11 +59,99 @@
       <el-col :span="6">
         <el-card class="box-card">
           <div slot="header">
-            Commentory
+            Last Issues
+          </div>
+          <div class="box-item">
+            <aside style="margin-top:1px;">
+              issues1 <svg-icon icon-class="eye-open" />
+            </aside>
+            <aside style="margin-top:1px;">
+              issues1 <svg-icon icon-class="eye-open" />
+            </aside>
+            <aside style="margin-top:1px;">
+              issues1 <svg-icon icon-class="eye-open" />
+            </aside>
+            <aside style="margin-top:1px;">
+              issues1 <svg-icon icon-class="eye-open" />
+            </aside>
+            <aside style="margin-top:1px;">
+              issues1 <svg-icon icon-class="eye-open" />
+            </aside>
+          </div>
+        </el-card>
+
+      </el-col>
+      <el-col :span="12" style="margin-top:15px;">
+        <el-card class="box-card">
+          <div slot="header">
+            Teams
+          </div>
+          <div class="box-item">
+            <aside style="margin-top:1px;">
+              Team1: description1 <svg-icon icon-class="eye-open" />
+            </aside>
+            <aside style="margin-top:1px;">
+              Team1: description1 <svg-icon icon-class="eye-open" />
+            </aside>
+            <aside style="margin-top:1px;">
+              Team1: description1 <svg-icon icon-class="eye-open" />
+            </aside>
+            <aside style="margin-top:1px;">
+              Team1: description1 <svg-icon icon-class="eye-open" />
+            </aside>
+            <aside style="margin-top:1px;">
+              Team1: description1 <svg-icon icon-class="eye-open" />
+            </aside>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="6" style="margin-top:15px;">
+        <el-card class="box-card">
+          <div slot="header">
+            StakHolders
           </div>
           <div class="box-item">
             <aside style="margin-top:15px;">
-              {{ list.content_short }}
+              Sponsor Organisation: company1
+            </aside>
+            <aside style="margin-top:15px;">
+              start Project: 14/07/2020
+            </aside>
+            <aside style="margin-top:15px;">
+              finish project : 1year
+            </aside>
+            <aside style="margin-top:15px;">
+              .
+            </aside>
+            <aside style="margin-top:15px;">
+              .
+            </aside>
+            <aside style="margin-top:15px;">
+              .
+            </aside>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="6" style="margin-top:15px;">
+        <el-card class="box-card">
+          <div slot="header">
+            Last Notes
+          </div>
+          <div class="box-item">
+            <aside style="margin-top:1px;">
+              Notes <svg-icon icon-class="eye-open" />
+            </aside>
+            <aside style="margin-top:1px;">
+              Notes <svg-icon icon-class="eye-open" />
+            </aside>
+            <aside style="margin-top:1px;">
+              Notes <svg-icon icon-class="eye-open" />
+            </aside>
+            <aside style="margin-top:1px;">
+              Notes <svg-icon icon-class="eye-open" />
+            </aside>
+            <aside style="margin-top:1px;">
+              Notes <svg-icon icon-class="eye-open" />
             </aside>
           </div>
         </el-card>
