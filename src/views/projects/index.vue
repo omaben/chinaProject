@@ -127,32 +127,32 @@
         <el-form-item label="Project Name" prop="title">
           <el-input v-model="temp.title" />
         </el-form-item>
-        <el-form-item label="Ojectif" prop="title">
-          <el-input v-model="temp.title" />
+        <el-form-item label="objectif" prop="title">
+          <el-input v-model="temp.objectif" />
         </el-form-item>
         <el-form-item label="Benifit" prop="title">
-          <el-input v-model="temp.title" />
+          <el-input v-model="temp.benifit" />
         </el-form-item>
         <el-form-item label="Accomplishments" prop="title">
-          <el-input v-model="temp.title" />
+          <el-input v-model="temp.accomplishments" />
         </el-form-item>
         <el-form-item label="Sponsor organisation" prop="title">
-          <el-input v-model="temp.title" />
+          <el-input v-model="temp.organisation" />
         </el-form-item>
         <el-form-item label="Initial Sponsor" prop="title">
-          <el-input v-model="temp.title" />
+          <el-input v-model="temp.initial_Sponsor" />
         </el-form-item>
         <el-form-item label="Initial Owner" prop="title">
-          <el-input v-model="temp.title" />
+          <el-input v-model="temp.initial_Owner" />
         </el-form-item>
         <el-form-item label="Initial Manager" prop="title">
-          <el-input v-model="temp.title" />
+          <el-input v-model="temp.initial_Manager" />
         </el-form-item>
         <el-form-item label="IT Manager" prop="title">
-          <el-input v-model="temp.title" />
+          <el-input v-model="temp.it_Manager" />
         </el-form-item>
         <el-form-item label="Project Office" prop="title">
-          <el-input v-model="temp.title" />
+          <el-input v-model="temp.project_office" />
         </el-form-item>
         <el-form-item label="Teams" prop="type">
           <el-select v-model="temp.type" multiple class="filter-item" placeholder="Please select">

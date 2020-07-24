@@ -19,5 +19,8 @@ export default {
   width: 100%;
   height: calc(100vh - 84px);
 }
+.el-card__body .box-item {
+    height: calc(100% - 5px);
+}
 </style>
 

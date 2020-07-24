@@ -90,7 +90,7 @@ export default {
           textStyle: {
             color: '#90979c'
           },
-          data: ['female', 'male', 'average']
+          data: ['Task Finished', ' Released Stories', 'Bug Resolved']
         },
         calculable: true,
         xAxis: [{
@@ -162,7 +162,7 @@ export default {
           end: 35
         }],
         series: [{
-          name: 'female',
+          name: 'Task Finished',
           type: 'bar',
           stack: 'total',
           barMaxWidth: 35,
@@ -199,7 +199,7 @@ export default {
         },
 
         {
-          name: 'male',
+          name: ' Released Stories',
           type: 'bar',
           stack: 'total',
           itemStyle: {
@@ -230,7 +230,7 @@ export default {
             220
           ]
         }, {
-          name: 'average',
+          name: 'Bug Resolved',
           type: 'line',
           stack: 'total',
           symbolSize: 10,
