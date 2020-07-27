@@ -34,7 +34,9 @@
     </div>
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="150px" style="width: 400px; margin-left:50px;">
-
+        <el-form-item label="Name">
+          <el-input v-model="temp.name" type="text" />
+        </el-form-item>
         <el-form-item label="Date" prop="timestamp">
           <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date" />
         </el-form-item>
@@ -292,6 +294,7 @@ export default {
           this.temp.author = 'vue-element-admin'
           createTask(this.temp).then(() => {
             this.list.unshift(this.temp)
+            this.getList()
             this.dialogFormVisible = false
             this.$notify({
               title: 'Success',
