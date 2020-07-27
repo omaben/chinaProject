@@ -1,43 +1,45 @@
 <template>
-    <div class="app-container">
-        <div class="filter-container">
-             <el-input v-model="listQuery.projects" placeholder="Project Name" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-            <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-                Search
-            </el-button>
-            <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-                Add
-            </el-button>
+  <div class="app-container">
+    <div class="filter-container">
+      <el-input v-model="listQuery.projects" placeholder="Project Name" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+        Search
+      </el-button>
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+        Add
+      </el-button>
+    </div>
+    <div id="boards">
+      <div v-for="(item,key) in listByProject" :key="key" class="boards-section">
+        <h3><svg-icon icon-class="form" /> {{ key }}</h3>
+      </div>
+      <div v-for="item in list" :key="item.id" v-loading="listLoading" class="board-projects">
+        <div class="icon-action">
+          <i class="el-icon-view" @click="handleView(item)" />
+          <i class="el-icon-edit" @click="handleUpdate(item)" />
+          <i class="el-icon-delete" @click="handleDelete(item,$index)" />
+          <svg-icon v-if="item.importance===0" icon-class="star" class="meta-item__icon" />
         </div>
-        <div id="boards">
-            <div class="board-projects" :key="tableKey" v-for="item in list" v-loading="listLoading" >
-                <div class="icon-action">
-                    <i class="el-icon-view" @click="handleView(item)"></i>
-                    <i class="el-icon-edit" @click="handleUpdate(item)"></i>
-                    <i class="el-icon-delete" @click="handleDelete(item,$index)"></i>
-                    <svg-icon v-if="item.importance===0" icon-class="star" class="meta-item__icon" />
-                </div>
-                <h2>{{item.projects}}</h2>
-                <p class="description">{{item.description}}</p>
-                <div class="team-tasks" v-for="team in item.team">{{team}}</div>
-            </div>
-        </div>
-         <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+        <h2>{{ item.projects }}</h2>
+        <p class="description">{{ item.description }}</p>
+        <div v-for="(team,key) in item.team" :key="key" class="team-tasks">{{ team }}</div>
+      </div>
+    </div>
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="150px" style="width: 400px; margin-left:50px;">
-        
+
         <el-form-item label="Date" prop="timestamp">
           <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date" />
         </el-form-item>
-        
-        
+
         <el-form-item label="Project">
           <el-select v-model="temp.projects" style="width: 100%" class="filter-item" @change="handleFilter">
             <el-option v-for="item in projects" :key="item" :label="item" :value="item" />
           </el-select>
         </el-form-item>
         <el-form-item label="Teams">
-          <el-select multiple v-model="temp.team" style="width: 100%" class="filter-item" @change="handleFilter">
-            <el-option  v-for="item in teams" :key="item" :label="item" :value="item" />
+          <el-select v-model="temp.team" multiple style="width: 100%" class="filter-item" @change="handleFilter">
+            <el-option v-for="item in teams" :key="item" :label="item" :value="item" />
           </el-select>
         </el-form-item>
         <!-- <el-form-item label="Importance">
@@ -56,7 +58,7 @@
         </el-button>
       </div>
     </el-dialog>
-    </div>
+  </div>
 </template>
 <style>
     .board-projects {
@@ -73,7 +75,7 @@
 }
 
 .board-projects svg.svg-icon {
-   
+
     color: red;
 }
 
@@ -122,8 +124,6 @@ div#boards {
 import { fetchList, fetchPv, createTask, updateTask } from '@/api/task'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
-import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import Project from '../projects' // secondary package based on el-pagination
 
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
@@ -140,7 +140,6 @@ const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
 
 export default {
   name: 'ComplexTable',
-  components: { Pagination,Project },
   directives: { waves },
   filters: {
     statusFilter(status) {
@@ -157,11 +156,12 @@ export default {
   },
   data() {
     return {
-      projects:['Project1', 'Project2', 'Project3', 'Project4'],
-      teams:['T1', 'T2', 'T3', 'T4'],
-      projectTitle:'',
+      projects: ['Project1', 'Project2', 'Project3', 'Project4'],
+      teams: ['T1', 'T2', 'T3', 'T4'],
+      projectTitle: '',
       tableKey: 0,
       list: null,
+      listByProject: null,
       total: 0,
       listLoading: true,
       listQuery: {
@@ -186,7 +186,7 @@ export default {
         type: '',
         status: 'published'
       },
-      dialogProjectVisible:false,
+      dialogProjectVisible: false,
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
@@ -207,15 +207,26 @@ export default {
     this.getList()
   },
   methods: {
-      handleView(item){
-          this.$router.push('/tasks/task')
-      },
+    handleView(item) {
+      this.$router.push('/tasks/task')
+    },
+    groupBy(array, key) {
+      const result = {}
+      array.forEach(item => {
+        if (!result[item[key]]) {
+          result[item[key]] = []
+        }
+        result[item[key]].push(item)
+      })
+      return result
+    },
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
-
+        const grouped = this.groupBy(response.data.items, 'projects')
+        this.listByProject = grouped
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
@@ -254,7 +265,7 @@ export default {
         description: '',
         timestamp: new Date(),
         title: '',
-        projects:'',
+        projects: '',
         status: 'published',
         team: []
       }
@@ -285,8 +296,8 @@ export default {
         }
       })
     },
-    handleProject(row){
-      this.projectTitle='Projects do by :'+row.title;
+    handleProject(row) {
+      this.projectTitle = 'Projects do by :' + row.title
       this.dialogProjectVisible = true
     },
     handleUpdate(row) {

@@ -196,3 +196,18 @@ aside {
   padding: 7px 10px;
   min-width: 30px;
 }
+.boards-section {
+  text-align: left;
+}
+
+.boards-section h3 {
+  display: inline-block;
+  line-height: 24px;
+  margin: 4px 0 0;
+  font-size: 16px;
+  font-weight: 700;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
