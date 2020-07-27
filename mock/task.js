@@ -11,6 +11,7 @@ for (let i = 0; i < count; i++) {
     id: '@increment',
     timestamp: +Mock.Random.date('T'),
     author: '@first',
+    name:'@title(1, 3)',
     'notes|1':['note1','note2','note3','note4'],
     'projects|1': ['Project1', 'Project2', 'Project3', 'Project4'],
     description: '@title(5, 10)',

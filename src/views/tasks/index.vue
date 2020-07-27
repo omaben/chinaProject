@@ -12,8 +12,15 @@
     <div id="boards">
       <div v-for="(item,key) in listByProject" :key="key" class="boards-section">
         <h3><svg-icon icon-class="form" /> {{ key }}</h3>
+        <ul class="boards-for-section">
+          <li v-for="(board,keyB) in listByProject[key]" :key="keyB">
+            <p>{{ board.name }}</p>
+            <svg-icon :class="board.importance===0 ? 'active_favorite' : ''" icon-class="star" class="meta-item__icon" />
+          </li>
+          <li class="new-board" @click="handleCreate"><p>Create New Board</p></li>
+        </ul>
       </div>
-      <div v-for="item in list" :key="item.id" v-loading="listLoading" class="board-projects">
+      <!-- <div v-for="item in list" :key="item.id" v-loading="listLoading" class="board-projects">
         <div class="icon-action">
           <i class="el-icon-view" @click="handleView(item)" />
           <i class="el-icon-edit" @click="handleUpdate(item)" />
@@ -23,7 +30,7 @@
         <h2>{{ item.projects }}</h2>
         <p class="description">{{ item.description }}</p>
         <div v-for="(team,key) in item.team" :key="key" class="team-tasks">{{ team }}</div>
-      </div>
+      </div> -->
     </div>
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="150px" style="width: 400px; margin-left:50px;">
