@@ -5,15 +5,15 @@
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+      <!-- <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
         Add
-      </el-button>
+      </el-button> -->
     </div>
     <div id="boards">
       <div v-for="(item,key) in listByProject" :key="key" class="boards-section">
         <h3><svg-icon icon-class="form" /> {{ key }}</h3>
         <ul class="boards-for-section">
-          <li v-for="(board,keyB) in listByProject[key]" :key="keyB">
+          <li v-for="(board,keyB) in listByProject[key]" :key="keyB" @click="handleView(board)">
             <p>{{ board.name }}</p>
             <svg-icon :class="board.importance===0 ? 'active_favorite' : ''" icon-class="star" class="meta-item__icon" />
           </li>
