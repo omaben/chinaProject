@@ -207,7 +207,7 @@ export default {
     height: calc(100% - 5px);
 }
 .right_info .el-card__body {
-    height: 94px;
+    height: 96px;
     overflow: hidden;
     background: #a21616;
     color: #fff;
@@ -229,7 +229,7 @@ h3.Status_Project span {
     color: #FF5722;
 }
 .right_info .el-card__body {
-    height: 94px;
+    height: 96px;
     overflow: hidden;
     background: #a21616;
     color: #fff;
