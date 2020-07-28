@@ -84,5 +84,26 @@ export default {
     -ms-flex-align: start;
     align-items: flex-start;
 }
+.components-container.board {
+    -webkit-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+    margin-bottom: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 8px;
+    position: absolute;
+    margin: 0;
+    top: 130px;
+    right: 10px;
+    bottom: 0;
+    left: 10px;
+    width: auto;
+    display: initial;
+}
+.add_new_mission input.el-input__inner {
+    background: transparent;
+    border: none;
+}
 </style>
 
