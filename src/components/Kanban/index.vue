@@ -78,7 +78,7 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 
 .hasTagsView .app-main{
   min-height: 100vh;
@@ -142,6 +142,7 @@ export default {
     border-radius: 0;
     background: #1f2d3d;
     color: #fff;
+    top:0;
 }
 
 .add_new_mission {
