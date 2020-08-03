@@ -281,7 +281,7 @@ ul.boards-for-section li svg {
 }
 .activities_task {
   position: absolute;
-  right: 3px;
+  right: -350px;
   width: 300px;
   z-index: 1;
   top: 145px;
@@ -295,8 +295,11 @@ ul.boards-for-section li svg {
   overflow: hidden;
   min-height: calc(100vh - 140px);
   box-shadow: 0 12px 24px -6px rgba(9,30,66,.25), 0 0 0 1px rgba(9,30,66,.08);
+  transition: all 1s;
 }
-
+.activities_task.showActivity {
+  right: 2px;
+}
 .activities_task h2 {
   box-sizing: border-box;
   flex: 0 0 auto;
@@ -361,4 +364,9 @@ ul.boards-for-section li svg {
   padding: 12px 6px 12px 12px;
   width: 100%;
   height: calc(100vh - 193px);
+}
+.activities_task h2 i {
+  position: absolute;
+  right: 8px;
+  cursor: pointer;
 }

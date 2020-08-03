@@ -14,12 +14,12 @@
         <img src="@/assets/img/backTask.jpeg" alt="404" title="user3">
         <img src="@/assets/img/backTask.jpeg" alt="404" title="user4">
       </div>
-      <el-button class="activity_task">
+      <el-button class="activity_task" @click="showActivities()">
         Show Activities
       </el-button>
     </div>
-    <div class="activities_task">
-      <h2>Activity</h2>
+    <div class="activities_task" :class="{'showActivity':showActivity}">
+      <h2>Activity <i class="el-icon-close" @click="showActivities()" /></h2>
       <div class="team_activ_bloc">
         <div class="team_activity">
           <img src="@/assets/img/backTask.jpeg" alt="404" title="user1">
@@ -92,6 +92,7 @@ export default {
   },
   data() {
     return {
+      showActivity: false,
       mission: '',
       image: 'backTask.jpeg',
       group: 'mission',
@@ -116,6 +117,11 @@ export default {
         { name: 'Mission', id: 9 },
         { name: 'Mission', id: 10 }
       ]
+    }
+  },
+  methods: {
+    showActivities() {
+      this.showActivity = !this.showActivity
     }
   }
 }
