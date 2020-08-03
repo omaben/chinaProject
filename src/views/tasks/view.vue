@@ -18,6 +18,45 @@
         Show Activities
       </el-button>
     </div>
+    <div class="activities_task">
+      <h2>Activity</h2>
+      <div class="team_activity">
+        <img src="@/assets/img/backTask.jpeg" alt="404" title="user1">
+        <div class="text_activity">
+          <p>
+            invited an unconfirmed member to this board
+          </p>
+          <span>Jully 10, 2020 at 11:43 PM</span>
+        </div>
+      </div>
+      <div class="team_activity">
+        <img src="@/assets/img/backTask.jpeg" alt="404" title="user1">
+        <div class="text_activity">
+          <p>
+            invited an unconfirmed member to this board
+          </p>
+          <span>Jully 10, 2020 at 11:43 PM</span>
+        </div>
+      </div>
+      <div class="team_activity">
+        <img src="@/assets/img/backTask.jpeg" alt="404" title="user1">
+        <div class="text_activity">
+          <p>
+            invited an unconfirmed member to this board
+          </p>
+          <span>Jully 10, 2020 at 11:43 PM</span>
+        </div>
+      </div>
+      <div class="team_activity">
+        <img src="@/assets/img/backTask.jpeg" alt="404" title="user1">
+        <div class="text_activity">
+          <p>
+            invited an unconfirmed member to this board
+          </p>
+          <span>Jully 10, 2020 at 11:43 PM</span>
+        </div>
+      </div>
+    </div>
     <div class="pic-task" />
     <div class="components-container board">
 
