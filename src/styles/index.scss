@@ -279,3 +279,86 @@ ul.boards-for-section li svg {
   right: 10px;
   bottom: 10px;
 }
+.activities_task {
+  position: absolute;
+  right: 3px;
+  width: 300px;
+  z-index: 1;
+  top: 145px;
+  background-color: #ebeced;
+  flex: 1;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* align-items: flex-start; */
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  overflow: hidden;
+  min-height: calc(100vh - 140px);
+  box-shadow: 0 12px 24px -6px rgba(9,30,66,.25), 0 0 0 1px rgba(9,30,66,.08);
+}
+
+.activities_task h2 {
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  height: 48px;
+  /* opacity: 0; */
+  overflow: hidden;
+  padding: 0 6px 0 12px;
+  position: relative;
+  transition: opacity .2s ease-in;
+  width: 100%;
+  margin: 0;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  text-overflow: ellipsis;
+  transition: margin .12s ease-in;
+  white-space: nowrap;
+  flex: 1;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+.team_activity {
+  margin-left: 40px;
+  min-height: 32px;
+  padding: 8px 0;
+  position: relative;
+}
+
+.team_activity img {
+  /* background-color: white; */
+  height: 27px;
+  left: -35px;
+  position: absolute;
+  top: 10px;
+  width: 27px;
+  border-radius: 50%;
+}
+
+.text_activity p {
+  font-size: 10pt;
+  font-weight: normal;
+  color: #172b4d;
+  margin: 0;
+}
+
+.text_activity span {
+  color: #5e6c84;
+  font-size: 10pt;
+  margin: 0;
+}
+
+.activities_task h2:after {content: '';width: 80%;border: 1px solid #172b4d;position: absolute;bottom: 0;left: 10%;}
+.team_activ_bloc {
+  box-sizing: border-box;
+  /* display: flex; */
+  /* flex: 1 1 auto; */
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 12px 6px 12px 12px;
+  width: 100%;
+  height: calc(100vh - 193px);
+}
