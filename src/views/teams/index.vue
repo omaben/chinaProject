@@ -76,7 +76,7 @@
       <el-table-column v-if="fromProject" label="Actions" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" class="mb-1" @click="handleUpdate(row)">
-            Edit
+            <svg-icon icon-class="edit" />
           </el-button>
           <el-button type="success" size="mini" class="mb-1" @click="handleProject(row)">
             Projects
